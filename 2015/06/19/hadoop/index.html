@@ -4,26 +4,35 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>新的开始 | Nxcjh&#39;s Blog</title>
+    <title>Hadoop的日志放在哪里? | Nxcjh&#39;s Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="[object Object]">
     
 
     
-    <meta name="description" content="今天创建了新的博客, 从此有了家, 以后要当一个顾家的男人.
---小狼躲藏">
+    <meta name="description" content="Hadoop MapReduce日志分为两部分: 一部分是服务日志, 一部分是作业日志.
+1. Hadoop 1.x版本
+Hadoop 1.x中MapReduce的服务日志包括JobTracker日志和各个TaskTracker日志，他们的日志位置如下：
+JobTracker：在JobTracker安装节点上，默认位置是
+${hadoop.log.dir}/logs/*-jobtracker-*.">
 <meta property="og:type" content="article">
-<meta property="og:title" content="新的开始">
-<meta property="og:url" content="http://nxcjh.com/2015/06/17/life/index.html">
+<meta property="og:title" content="Hadoop的日志放在哪里?">
+<meta property="og:url" content="http://nxcjh.com/2015/06/19/hadoop/index.html">
 <meta property="og:site_name" content="Nxcjh's Blog">
-<meta property="og:description" content="今天创建了新的博客, 从此有了家, 以后要当一个顾家的男人.
---小狼躲藏">
-<meta property="og:updated_time" content="2015-06-17T11:41:16.000Z">
+<meta property="og:description" content="Hadoop MapReduce日志分为两部分: 一部分是服务日志, 一部分是作业日志.
+1. Hadoop 1.x版本
+Hadoop 1.x中MapReduce的服务日志包括JobTracker日志和各个TaskTracker日志，他们的日志位置如下：
+JobTracker：在JobTracker安装节点上，默认位置是
+${hadoop.log.dir}/logs/*-jobtracker-*.">
+<meta property="og:updated_time" content="2015-06-19T02:32:20.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="新的开始">
-<meta name="twitter:description" content="今天创建了新的博客, 从此有了家, 以后要当一个顾家的男人.
---小狼躲藏">
+<meta name="twitter:title" content="Hadoop的日志放在哪里?">
+<meta name="twitter:description" content="Hadoop MapReduce日志分为两部分: 一部分是服务日志, 一部分是作业日志.
+1. Hadoop 1.x版本
+Hadoop 1.x中MapReduce的服务日志包括JobTracker日志和各个TaskTracker日志，他们的日志位置如下：
+JobTracker：在JobTracker安装节点上，默认位置是
+${hadoop.log.dir}/logs/*-jobtracker-*.">
 
     
     <link rel="alternative" href="/atom.xml" title="Nxcjh&#39;s Blog" type="application/atom+xml">
@@ -83,14 +92,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/06/17/life/" title="新的开始" itemprop="url">新的开始</a>
+      <a href="/2015/06/19/hadoop/" title="Hadoop的日志放在哪里?" itemprop="url">Hadoop的日志放在哪里?</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="[object Object]" target="_blank" itemprop="author">[object Object]</a>
 		
   <p class="article-time">
-    <time datetime="2015-06-17T11:23:56.000Z" itemprop="datePublished"> 发表于 2015-06-17</time>
+    <time datetime="2015-06-19T02:15:00.000Z" itemprop="datePublished"> 发表于 2015-06-19</time>
     
   </p>
 </header>
@@ -103,8 +112,21 @@
 		
 		</div>
 		
-		<p>  今天创建了新的博客, 从此有了家, 以后要当一个顾家的男人.</p>
-<pre><code><span class="comment">--小狼躲藏</span>
+		<pre><code>Hadoop MapReduce日志分为两部分: 一部分是服务日志, 一部分是作业日志.
+<span class="number">1</span>. Hadoop <span class="number">1</span>.x版本
+Hadoop <span class="number">1</span>.x中MapReduce的服务日志包括JobTracker日志和各个TaskTracker日志，他们的日志位置如下：
+JobTracker：在JobTracker安装节点上，默认位置是
+${hadoop.<span class="keyword">log</span>.dir}/logs/*-jobtracker-*.<span class="keyword">log</span>，该文件每天生成一个，旧的日志后缀是日期，当天的日志文件后缀是“.<span class="keyword">log</span>”，其中${hadoop.<span class="keyword">log</span>.dir}默认值是hadoop安装目录，即${HADOOP_HOME}。
+TaskTracker：在各个TaskTracker安装节点上，默认位置是
+<span class="variable">$HADOOP_HOME</span>/logs/*-tasktracker-*.<span class="keyword">log</span>，该文件每天生成一个，旧的日志后面会跟一个日志，当天的日志文件后缀是“.<span class="keyword">log</span>”
+作业日志包括jobhistory日志和task日志两部分，其中，jobhistory日志是作业运行日志，包括作业启动时间、结束时间，每个任务的启动时间、结束时间，各种counter信息等，用户可以从这个日志中解析出作业运行的各种信息，是非常有价值的信息。默认存放位置是JobTracker所在节点的${hadoop.<span class="keyword">log</span>.dir}/history目录下，可通过参数hadoop.job.history.location配置。每个task日志存放在task运行节点上，存放位置是${hadoop.<span class="keyword">log</span>.dir}/userlogs/<span class="variable">&lt;jobid&gt;</span>/<span class="variable">&lt;attempt-id&gt;</span>目录下，每个task包含三个日志文件，分别是stdout、stderr和syslog，其中，stdout是通过标准输出打印出来的日志，比如System.<span class="keyword">out</span>.println，注意，程序中通过标准输出打印的日志并不会直接显示在终端上，而是保存在这个文件中，syslog是通过log4j打印的日志，通常这个日志中包含的有用信息最多，也是错误调试中最关键的参考日志。
+
+<span class="number">2</span>. Hadoop <span class="number">2</span>.x版本
+Hadoop <span class="number">2</span>.x中YARN系统的服务日志包括ResourceManager日志和NodeManager日志, 他们的日志位置如下:
+    (<span class="number">1</span>) ResourceManager日志存放位置是Hadoop安装目录下的logs目录下的yarn-*-resourceManager-*.<span class="keyword">log</span>
+    (<span class="number">2</span>) NodeManager日志存放位置是各个NodeManger节点上hadoop安装目录下的logs目录下的yarn-*-nodemanager-*.<span class="keyword">log</span>
+应用程序日志包括JobHistory日志和Container日志, 其中, JobHistory日志是应用程序运行日志, 包括应用程序启动时间, 结束时间, 每个任务的启动时间, 结束时间, 各种counter信息等.
+    (<span class="number">1</span>) Container日志包含ApplicationMaster日志和普通Task日志,他们均存放在Hadoop安装目录下的userlogs目录中的application_xxx目录下,其中ApplicationMaster日志目录名称为container_xxx_000001. 普通task日志目录名称则为container_xxx_000002,container_xxx_000003，….，同Hadoop <span class="number">1</span>.x一样，每个目录下包含三个日志文件：stdout、stderr和syslog，且具体含义是一样的。
 </code></pre>  
 	</div>
 		<footer class="article-footer clearfix">
@@ -112,13 +134,13 @@
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/人生杂谈/">人生杂谈</a>
+  <a class="article-category-link" href="/categories/hadoop/">hadoop</a>
 </div>
 
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/人生/">人生</a>
+  <span></span> <a href="/tags/hadoop/">hadoop</a>
   </div>
 
 </div>
@@ -127,7 +149,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://nxcjh.com/2015/06/17/life/" data-title="新的开始 | Nxcjh&#39;s Blog" data-tsina="null" class="share clearfix">
+	  <div data-url="http://nxcjh.com/2015/06/19/hadoop/" data-title="Hadoop的日志放在哪里? | Nxcjh&#39;s Blog" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -140,19 +162,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2015/06/18/HBase/" title="HBase实例">
-  <strong>上一篇：</strong><br/>
-  <span>
-  HBase实例</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/1940/10/24/hello-world/"  title="Hello World">
+<a href="/2015/06/18/HBase/"  title="HBase">
  <strong>下一篇：</strong><br/> 
- <span>Hello World
+ <span>HBase
 </span>
 </a>
 </div>
